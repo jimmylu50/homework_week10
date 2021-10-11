@@ -1,0 +1,82 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Basic Sanitation level across different continents",
+  "data": {
+    "url": "https://raw.githubusercontent.com/jimmylu51/fit3179_asgn2/main/data/Basic%20Sanitation%20final.csv"
+  },
+  "width": 500,
+  "height": 400,
+  "layer": [
+    {
+      "encoding": {
+        "x": {"field": "Column", "type": "temporal", "title": "Year"},
+        "y": {"field": "Value", "type": "quantitative", "title":"Percentage of people with basic sanitation"},
+        "color": {"field": "Row", "type": "nominal", "title": "Continents"}
+      },
+      "layer": [
+        {"mark": "line"},
+        {
+          "params": [{
+            "name": "label",
+            "select": {
+              "type": "point",
+              "encodings": ["x"],
+              "nearest": true,
+              "on": "mouseover"
+            }
+          }],
+          "mark": "point",
+          "encoding": {
+            "opacity": {
+              "condition": {
+                "param": "label",
+                "empty": false,
+                "value": 1
+              },
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [{"filter": {"param": "label", "empty": false}}],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "blues"},
+          "encoding": {
+            "x": {"type": "temporal", "field": "Column", "aggregate": "min"}
+          }
+        },
+        {
+          "encoding": {
+            "text": {"type": "quantitative", "field": "Value","axis": {"format": ".2f"}},
+            "x": {"type": "temporal", "field": "Column"},
+            "y": {"type": "quantitative", "field": "Value"}
+          },
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "stroke": "white",
+                "strokeWidth": 2,
+                "align": "left",
+                "dx": 5,
+                "dy": -5
+              }
+            },
+            {
+              "mark": {"type": "text", "align": "left", "dx": 5, "dy": -5},
+              "encoding": {
+                "color": {"type": "nominal", "field": "Row", 
+                "scale": {"range": [
+                  "#1b9e77", "#d95f02",  "#1f78b4", "#a6cee3", "#7570b3", "#b2df8a", "#66c2a5", "#fc8d62"
+                  ]}}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
