@@ -1,44 +1,117 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 500,
-  "height": 400,
-  "title": "Population vs CO2 in the past decades",
-  "data": {
-      "url": "https://raw.githubusercontent.com/jimmylu51/fit3179_asgn2/main/data/Scatter.csv"
-  },
-  "params": [ { "name": "Year", "value": 2001, "bind": { "input": "range","min": 2001, "max": 2018, "step": 1, "name": "Year: " } }
-  ],
-  "transform": [
-    {"filter": "datum.Population > 0"},
-    {"filter": "datum.CO2 > 0"},
-    {"filter": "datum.Column == Year"}
-  ],
-  "mark": "circle",
-  "encoding": {
-      "x": {
-          "field": "Population",
-          "type": "quantitative",
-          "title": "Population",
-          "axis": {"tickCount": 7}, 
-          "scale": {"type": "log", "domain": [1, 5000000000]}
-      },
-      "y": {
-          "field": "CO2",
-          "type": "quantitative",
-          "axis": {"tickCount": 7}, 
-          "scale": {"type": "log", "domain": [1, 50000000]}
-      },
-      "color": {
-          "field": "Life_exp",
-          "type": "quantitative",
-          "scale":{"scheme": "yellowgreenblue"}
-      },
-      "opacity": {"value": 0.6},
-    "tooltip":[
-      {"field": "Row", "type": "nominal", "title": "Country"}, 
-      {"field": "Population", "type": "quantitative", "format": ","}, 
-      {"field": "CO2", "type": "quantitative", "format": ","}, 
-      {"field": "Life_exp", "type": "quantitative", "format": ","}
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 500,
+    "height": 400,
+    "title": "Population vs CO2 in the past decades",
+    "data": {
+        "url": "https://raw.githubusercontent.com/jimmylu51/fit3179_asgn2/main/data/Scatter.csv"
+    },
+    "params": [
+        {
+            "name": "Year",
+            "value": 2001,
+            "bind": {
+                "input": "range",
+                "min": 2001,
+                "max": 2018,
+                "step": 1,
+                "name": "Year: "
+            }
+        }
+    ],
+    "transform": [
+        {
+            "filter": "datum.Population > 0"
+        },
+        {
+            "filter": "datum.CO2 > 0"
+        },
+        {
+            "filter": "datum.Column == Year"
+        }
+    ],
+    "layer": [
+        {
+            "mark": "circle",
+            "encoding": {
+                "x": {
+                    "field": "Population",
+                    "type": "quantitative",
+                    "title": "Population",
+                    "axis": {
+                        "tickCount": 7
+                    },
+                    "scale": {
+                        "type": "log",
+                        "domain": [
+                            1,
+                            5000000000
+                        ]
+                    }
+                },
+                "y": {
+                    "field": "CO2",
+                    "type": "quantitative",
+                    "axis": {
+                        "tickCount": 7
+                    },
+                    "scale": {
+                        "type": "log",
+                        "domain": [
+                            1,
+                            50000000
+                        ]
+                    }
+                },
+                "color": {
+                    "field": "Life_exp",
+                    "type": "quantitative",
+                    "scale": {
+                        "scheme": "yellowgreenblue"
+                    }
+                },
+                "opacity": {
+                    "value": 0.6
+                },
+                "tooltip": [
+                    {
+                        "field": "Row",
+                        "type": "nominal",
+                        "title": "Country"
+                    },
+                    {
+                        "field": "Population",
+                        "type": "quantitative",
+                        "format": ","
+                    },
+                    {
+                        "field": "CO2",
+                        "type": "quantitative",
+                        "format": ","
+                    },
+                    {
+                        "field": "Life_exp",
+                        "type": "quantitative",
+                        "format": ","
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "right",
+                "dx": 60,
+                "dy": -100,
+                "size": 1,
+                "fontSize": 18,
+                "fontWeight": 200,
+                "lineBreak": "/"
+
+            },
+            "encoding": {
+                "text": {"value": "There is positive correlation between / Population and CO2 emission."}
+            }
+        }
     ]
-  }
 }
