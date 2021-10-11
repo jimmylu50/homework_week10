@@ -1,0 +1,60 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {"text": "Correlations between factors of World Development", 
+    "anchor": "middle"},
+    "repeat": {
+      "row": ["Population", "CO2", "Labor"],
+      "column": ["Population", "CO2", "Labor"]
+    },
+    "spec": {
+      "data": {"url": "https://raw.githubusercontent.com/jimmylu51/fit3179_asgn2/main/data/Interactive%20scatter.csv"},
+      "mark": "point",
+      "params": [
+        {
+          "name": "brush",
+          "select": {
+            "type": "interval",
+            "resolve": "union",
+            "on": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+            "translate": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+            "zoom": "wheel![event.shiftKey]"
+          }
+        },
+        {
+          "name": "grid",
+          "select": {
+            "type": "interval",
+            "resolve": "global",
+            "translate": "[mousedown[!event.shiftKey], window:mouseup] > window:mousemove!",
+            "zoom": "wheel![!event.shiftKey]"
+          },
+          "bind": "scales"
+        }
+      ],
+      "width": 150,
+      "height": 150,
+      "encoding": {
+        "x": {"field": {"repeat": "column"}, 
+              "type": "quantitative",
+              "axis": {"tickCount": 7}, 
+              "scale": {"type": "log", "domain": [1, 500000000]}},
+        "y": {
+          "field": {"repeat": "row"},
+          "type": "quantitative",
+          "axis": {"minExtent": 30, "tickCount": 7},
+          "scale": {"type": "log", "domain": [1, 500000000]}
+        },
+        "color": {
+          "value": "#1f78b4"
+        },
+          "opacity": {"value": 0.1},
+  
+        "tooltip":[
+          {"field": "Countries", "type": "nominal", "title": "Country"}, 
+          {"field": "Population", "type": "quantitative", "format": ","}, 
+          {"field": "CO2", "type": "quantitative", "format": ","}, 
+          {"field": "Labor", "type": "quantitative", "title": "Labor Force", "format": ","}
+        ]
+      }
+    }
+  }
